@@ -11,7 +11,7 @@ EXAMPLE PROGRAM:
 ===============================
 
 import scrub_report
-sr = scrub_report.ScrubReport(filepath, keep, ignore)
+sr = scrub_report.ScrubReport('my_code_dir', ['py'], [])
 files = sr.get_files()
 methods = sr.get_methods(files)
 called_by = sr.get_files_using_methods(files, methods)
