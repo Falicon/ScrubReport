@@ -1,15 +1,15 @@
 #DESCRIPTION:
 A simple tool to parse all code within a directory and report back on what
-methods appear to not be called from within that code.
+methods are and are not called from within that code.
 
 Initially intended to be used with .py files for finding Python methods that
-not being called from within a project.
+are not being called from within a project.
 
-##NOTE:
+#####NOTE:
 This program makes no code changes or alterations and essentially operates in
 read-only mode. It simply dumps a report to help you decide what to do in code.
 
-###EXAMPLE PROGRAM:
+#####EXAMPLE PROGRAM:
 
 ```python
 import scrub_report

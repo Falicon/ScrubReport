@@ -1,11 +1,11 @@
 """
 DESCRIPTION:
 ===============================
-  A simple tool to parse all code within a directory and report back on what
-  methods appear to not be called from within that code.
+A simple tool to parse all code within a directory and report back on what
+methods appear to not be called from within that code.
 
-  Initially intended to be used for finding Python methods that not being
-  called from within a project.
+Initially intended to be used for finding Python methods that are not being
+called from within a project.
 
 EXAMPLE PROGRAM:
 ===============================
@@ -17,13 +17,14 @@ methods = sr.get_methods(files)
 called_by = sr.get_files_using_methods(files, methods)
 not_called = sr.get_methods_not_called(called_by, methods)
 print not_called
-
 """
+
 import re
 
 from os import walk
 
 class ScrubReport(object):
+  # initialize our class
   def __init__(self, filepath, keep, ignore):
     self.filepath = filepath
     self.keep = keep
@@ -62,20 +63,6 @@ class ScrubReport(object):
 
     return files_found
 
-  # go through our list of files and look for method definitions
-  def get_methods(self, files):
-    methods = []
-    for file in files:
-      f = open(file, 'r')
-      raw_data = f.read()
-      for line in raw_data.split('\n'):
-        m = re.search(r'def ([^(]+)', line)
-        if m:
-          method_name = m.group(1).strip()
-          if method_name not in methods:
-            methods.append(method_name)
-    return methods
-
   # go through our files and look for calls of these methods
   def get_files_using_methods(self, files, methods):
     called_by = {}
@@ -100,6 +87,21 @@ class ScrubReport(object):
             pass
     return called_by
 
+  # go through our list of files and look for method definitions
+  def get_methods(self, files):
+    methods = []
+    for file in files:
+      f = open(file, 'r')
+      raw_data = f.read()
+      for line in raw_data.split('\n'):
+        m = re.search(r'def ([^(]+)', line)
+        if m:
+          method_name = m.group(1).strip()
+          if method_name not in methods:
+            methods.append(method_name)
+    return methods
+
+  # build a list of methods that do not appear to be called
   def get_methods_not_called(self, called_by, methods):
     not_called = []
     for method in methods:
