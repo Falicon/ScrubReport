@@ -9,7 +9,7 @@ not being called from within a project.
 This program makes no code changes or alterations and essentially operates in
 read-only mode. It simply dumps a report to help you decide what to do in code.
 
-#EXAMPLE PROGRAM:
+###EXAMPLE PROGRAM:
 
 import scrub_report
 sr = scrub_report.ScrubReport('my_code_dir', ['py'], [])
