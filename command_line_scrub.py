@@ -37,7 +37,7 @@ if (len(sys.argv) > 2 and sys.argv[2] != ""):
   keep = [x.strip() for x in sys.argv[2].split(',')]
 
 check_methods = False
-if (len(sys.arg) > 3 and sys.argv[3] != ""):
+if (len(sys.argv) > 3 and sys.argv[3] != ""):
   if sys.argv[3] != 'false':
     check_methods = True
 
