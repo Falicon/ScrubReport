@@ -31,6 +31,19 @@ class ScrubReport(object):
     self.ignore = ignore
     return
 
+  # get the count of lines of code
+  def count_lines_of_code(self, files):
+    details = {'code':0, 'comments':0}
+    for file in files:
+      f = open(file, 'r')
+      raw_data = f.read()
+      for line in raw_data.split('\n'):
+        if line.strip() != '' and line.strip().find('#') == 0:
+          details['comments'] += 1
+        elif line.strip() != '':
+          details['code'] += 1
+    return details
+
   # build the initial list of files that match what we are looking for
   def get_files(self):
     all_files = []
