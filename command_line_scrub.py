@@ -63,13 +63,19 @@ print("=====================================================================")
 print("%s files" % len(files))
 print("%s lines of code" % code_details['code'])
 print("%s comments" % code_details['comments'])
+print("=====================================================================")
 print("")
+
+print("=====================================================================")
+print("The following imports are called:")
+print("=====================================================================")
+for imp in sorted(imports):
+  print(" - %s" % imp)
 
 if check_methods:
   print("=====================================================================")
-  print("")
   print("The following methods are not directly called by code in the project:")
   print("=====================================================================")
   for nc in not_called:
-    print " - %s" % nc
+    print(" - %s" % nc)
 
