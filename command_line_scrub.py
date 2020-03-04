@@ -50,21 +50,26 @@ sr = scrub_report.ScrubReport(filepath, keep, ignore)
 files = sr.get_files()
 
 code_details = sr.count_lines_of_code(files)
+imports = sr.get_imports(files)
 
 if check_methods:
   methods = sr.get_methods(files)
   called_by = sr.get_files_using_methods(files, methods)
   not_called = sr.get_methods_not_called(called_by, methods)
 
-print "Basic code breakdown"
-print "====================================================================="
-print "%s files" % len(files)
-print "%s lines of code" % code_details['code']
-print "%s comments" % code_details['comments']
-print
-print "====================================================================="
-print
-print "The following methods are not directly called by code in the project:"
-print "====================================================================="
-# for nc in not_called:
-#   print " - %s" % nc
+
+print("Basic code breakdown")
+print("=====================================================================")
+print("%s files" % len(files))
+print("%s lines of code" % code_details['code'])
+print("%s comments" % code_details['comments'])
+print("")
+
+if check_methods:
+  print("=====================================================================")
+  print("")
+  print("The following methods are not directly called by code in the project:")
+  print("=====================================================================")
+  for nc in not_called:
+    print " - %s" % nc
+

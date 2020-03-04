@@ -29,6 +29,7 @@ class ScrubReport(object):
     self.filepath = filepath
     self.keep = keep
     self.ignore = ignore
+
     return
 
   # get the count of lines of code
@@ -40,8 +41,10 @@ class ScrubReport(object):
       for line in raw_data.split('\n'):
         if line.strip() != '' and line.strip().find('#') == 0:
           details['comments'] += 1
+
         elif line.strip() != '':
           details['code'] += 1
+
     return details
 
   # build the initial list of files that match what we are looking for
@@ -61,8 +64,10 @@ class ScrubReport(object):
           m = re.search(r'%s$' % i, file)
           if m:
             keep_file = False
+
         if keep_file:
           files_found.append(file)
+
     else:
       # specifically listed what to keep
       for file in all_files:
@@ -71,6 +76,7 @@ class ScrubReport(object):
           m = re.search(r'%s$' % k, file)
           if m:
             keep_file = True
+
         if keep_file:
           files_found.append(file)
 
@@ -93,11 +99,14 @@ class ScrubReport(object):
               # this file appears to call this method
               if method not in called_by.keys():
                 called_by[method] = [file]
+
               else:
                 if file not in called_by[method]:
                   called_by[method].append(file)
+
           except:
             pass
+
     return called_by
 
   # go through our list of files and look for method definitions
@@ -112,6 +121,7 @@ class ScrubReport(object):
           method_name = m.group(1).strip()
           if method_name not in methods:
             methods.append(method_name)
+
     return methods
 
   # build a list of methods that do not appear to be called
@@ -120,4 +130,24 @@ class ScrubReport(object):
     for method in methods:
       if method not in called_by.keys():
         not_called.append(method)
+
     return not_called
+
+  # build a list of imports
+  def get_imports(self, files):
+    imports = []
+    for file in files:
+      f = open(file, 'r')
+      raw_data = f.read()
+      for line in raw_data.split('\n'):
+        m = re.search(r'import ([^\n]+)', line)
+        if m:
+          import_list = m.group(1).strip().split(',')
+          for import_item in import_list:
+            if import_item.strip() not in imports:
+              imports.append(import_item.strip())
+
+    return imports
+
+
+
