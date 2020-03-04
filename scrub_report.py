@@ -140,7 +140,7 @@ class ScrubReport(object):
       f = open(file, 'r')
       raw_data = f.read()
       for line in raw_data.split('\n'):
-        m = re.search(r'import ([^\n]+)', line)
+        m = re.search(r'^import ([^\n]+)', line)
         if m:
           import_list = m.group(1).strip().split(',')
           for import_item in import_list:
